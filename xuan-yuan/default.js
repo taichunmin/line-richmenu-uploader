@@ -13,7 +13,7 @@ module.exports = {
         bounds: { x: 0, y: 0, width: 833, height: 843 },
         action: {
           type: 'uri',
-          uri: 'https://www.google.com/maps/dir/?api=1&destination=105%E5%8F%B0%E5%8C%97%E5%B8%82%E6%9D%BE%E5%B1%B1%E5%8D%80%E6%92%AB%E9%81%A0%E8%A1%97401%E5%B7%B72%E8%99%9F',
+          uri: 'https://www.google.com/maps/search/?api=1&query=MISMO%20%E7%B1%B3%E6%80%9D%E8%8E%AB%20-%20%E5%A4%9A%E5%85%83%E6%B4%BB%E5%8B%95%E7%A9%BA%E9%96%93&query_place_id=ChIJdy_FRvGrQjQRDYHeZJlFjig',
         },
       },
       { // 洽詢內容
