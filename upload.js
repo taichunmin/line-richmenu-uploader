@@ -1,10 +1,10 @@
 const _ = require('lodash')
 const { beautifyFlex, errToPlainObj, getenv, sha1Base64url } = require('./utils')
+const { Client: Line, OAuth: LineOAuth } = require('@line/bot-sdk')
 const { promises: fsPromises } = require('fs')
 const axios = require('axios')
 const fg = require('fast-glob')
 const JSON5 = require('json5')
-const Line = require('@line/bot-sdk').Client
 const path = require('path')
 
 const logError = (prefix, err) => {
@@ -15,7 +15,15 @@ const logError = (prefix, err) => {
 
 exports.upload = async () => {
   try {
-    const channelAccessToken = getenv('LINEOA_ACCESS_TOKEN')
+    let channelAccessToken = getenv('LINEOA_ACCESS_TOKEN')
+    const channelId = getenv('LINEOA_CHANNEL_ID')
+    const channelSecret = getenv('LINEOA_CHANNEL_SECRET')
+    if (!channelAccessToken && (channelId && channelSecret)) {
+      try { // try to issue access token by channel id and channel secret
+        const lineOAuth = new LineOAuth()
+        channelAccessToken = (await lineOAuth.issueAccessToken())?.access_token
+      } catch (err) {}
+    }
     if (!channelAccessToken) throw new Error('invalid access token')
     const line = new Line({ channelAccessToken })
 

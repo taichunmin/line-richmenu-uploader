@@ -1,39 +1,28 @@
 name: 宣源車體防護 (@x.y.uan)
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'xuan-yuan/**'
   workflow_dispatch:
 
 jobs:
   upload:
-    environment: xuan-yuan
-    runs-on: ubuntu-latest
     if: ${{ github.actor == github.repository_owner }}
-
+    runs-on: ubuntu-latest
+    environment: 
+      name: xuan-yuan
+      url: https://line.me/R/ti/p/@x.y.uan
     steps:
-    - uses: actions/checkout@v2
-    - name: 安裝 Node.js 與 yarn
-      uses: actions/setup-node@v2
+    - uses: actions/checkout@v3
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
       with:
-        node-version: '16.x'
-        check-latest: true
-
-    - name: 取得 yarn 的快取資料夾路徑
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
-
-    - name: 讓 yarn 使用快取機制
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-yarn-modules
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-
-    - run: yarn
+        node-version: 18
+        cache: 'yarn'
+    - name: 安裝相依套件
+      run: yarn
     - name: 上傳圖文選單
       uses: nick-fields/retry@v2
       with:
