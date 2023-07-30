@@ -1,10 +1,10 @@
-name: 宣源車體防護 (@x.y.uan)
+name: Urania艾芙蒂亞 (@urania)
 
 on:
   push:
     branches: [master]
     paths:
-      - 'xuan-yuan/**'
+      - 'urania/**'
   workflow_dispatch:
 
 jobs:
@@ -12,8 +12,8 @@ jobs:
     if: ${{ github.actor == github.repository_owner }}
     runs-on: ubuntu-latest
     environment: 
-      name: xuan-yuan
-      url: https://line.me/R/ti/p/@x.y.uan
+      name: urania
+      url: https://line.me/R/ti/p/@urania
     steps:
     - uses: actions/checkout@v3
     - name: Setup Node.js
@@ -31,5 +31,6 @@ jobs:
         retry_on: error
         command: yarn upload
       env:
-        LINEOA_ACCESS_TOKEN: ${{ secrets.LINEOA_ACCESS_TOKEN }}
-        RICHMENU_DIRECTORY: xuan-yuan
+        LINEOA_CHANNEL_ID: ${{ secrets.LINEOA_CHANNEL_ID }}
+        LINEOA_CHANNEL_SECRET: ${{ secrets.LINEOA_CHANNEL_SECRET }}
+        RICHMENU_DIRECTORY: urania

@@ -21,7 +21,7 @@ exports.upload = async () => {
     if (!channelAccessToken && (channelId && channelSecret)) {
       try { // try to issue access token by channel id and channel secret
         const lineOAuth = new LineOAuth()
-        channelAccessToken = (await lineOAuth.issueAccessToken())?.access_token
+        channelAccessToken = (await lineOAuth.issueAccessToken(channelId, channelSecret))?.access_token
       } catch (err) {}
     }
     if (!channelAccessToken) throw new Error('invalid access token')
